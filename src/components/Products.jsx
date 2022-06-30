@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 const Products = () => {
   const [data, setData] = useState([]);
@@ -24,14 +25,29 @@ const Products = () => {
   }, []);
 
   const Loading = () => {
-    return <>Loading...</>;
+    return (
+      <>
+        <div className="col-md-3">
+          <Skeleton height={350} />
+        </div>
+        <div className="col-md-3">
+          <Skeleton height={350} />
+        </div>
+        <div className="col-md-3">
+          <Skeleton height={350} />
+        </div>
+        <div className="col-md-3">
+          <Skeleton height={350} />
+        </div>
+      </>
+    );
   };
 
   const ShowProducts = () => {
     return (
       <>
         <div className="buttons d-flex justify-content-center mb-5 pd-5">
-          <button className="btn btn-outline-dark me-2">All</button>
+          <button className="btn btn-outline-dark me-2" onClick={()=>setFilter(data)}>All</button>
           <button className="btn btn-outline-dark me-2">Men's Clothing</button>
           <button className="btn btn-outline-dark me-2">
             Women's Clothing
@@ -42,16 +58,18 @@ const Products = () => {
         {filter.map((product) => {
           return (
             <>
-              <div className='col-md-3 mb-4'>
+              <div className="col-md-3 mb-4">
                 <div class="card h-100 text-center p-4" key={product.id}>
                   <img
                     src={product.image}
                     class="card-img-top"
                     alt={product.title}
-                    height='200px'
+                    height="200px"
                   />
                   <div class="card-body">
-                    <h5 class="card-title mb-0">{product.title.substring(0,12)}</h5>
+                    <h5 class="card-title mb-0">
+                      {product.title.substring(0, 12)}
+                    </h5>
                     <p class="card-text lead fw-bold">${product.price}</p>
                     <a href="#" class="btn btn-outline-dark">
                       Buy Now
