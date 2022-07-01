@@ -43,6 +43,7 @@ const Products = () => {
     );
   };
 
+  
   const filterProduct = (cat) =>{
     const updatedList = data.filter(e => e.category === cat);
     setFilter(updatedList);
