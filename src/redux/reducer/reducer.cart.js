@@ -5,10 +5,12 @@ const cart = [];
 
 export const handleCart = (state = cart, {type, payload}) => {
      const product = payload;
+     // console.log('product: ', product);
      switch(type){
           case ADDITEM:
                //Check if Product is Already Exist
                const exist = state.find((x) => x.id === product.id);
+               // console.log('exist: ', exist);
                if(exist){
                     //Increase the Quantity
                     return state.map((x) => x.id === product.id ? {...x, qty: x.qty + 1} : x);
@@ -22,7 +24,7 @@ export const handleCart = (state = cart, {type, payload}) => {
                          }
                     ]
                }
-               break;
+               
           case DELITEM:
                const exist1 = state.find((x) => x.id === product.id);
                if(exist1.qty === 1){
@@ -30,9 +32,10 @@ export const handleCart = (state = cart, {type, payload}) => {
                }else{
                     return state.map((x) => x.id === product.id ? {...x, qty: x.qty - 1} : x);
                }
-               break;
+               
           default:
-          break;
+               return state;
+          
 
      }
 }

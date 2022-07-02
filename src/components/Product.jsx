@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import Skeleton from 'react-loading-skeleton';
+import { useDispatch } from 'react-redux/es/exports';
+import { addCart } from '../redux/action/action';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 export default function Product() {
@@ -8,6 +10,12 @@ export default function Product() {
   console.log('id: ', id);
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
+  const addProduct = (p) => {
+     // console.log('p: ', p);
+    dispatch(addCart(p));
+  };
 
   useEffect(() => {
     const getProduct = async () => {
@@ -33,7 +41,7 @@ export default function Product() {
           <Skeleton height={25} width={150} />
           <Skeleton height={50} />
           <Skeleton height={150} />
-          <div style={{display:'flex', flexDirection:'horizontal'}}>
+          <div style={{ display: 'flex', flexDirection: 'horizontal' }}>
             <Skeleton height={50} width={100} />
             <Skeleton height={50} width={100} style={{ marginLeft: 6 }} />
           </div>
@@ -62,7 +70,7 @@ export default function Product() {
           </p>
           <h3 className="display-6 fw-bold my-4">₹{product.price}</h3>
           <p className="lead">{product.description}</p>
-          <button className="btn btn-outline-dark px-4 py-2">
+          <button className="btn btn-outline-dark px-4 py-2" onClick={()=>addProduct(product)}>
             {' '}
             Add to Cart
           </button>
