@@ -7,13 +7,13 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 export default function Product() {
   const { id } = useParams();
-  console.log('id: ', id);
+  //   console.log('id: ', id);
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const addProduct = (p) => {
-     // console.log('p: ', p);
+    // console.log('p: ', p);
     dispatch(addCart(p));
   };
 
@@ -70,11 +70,14 @@ export default function Product() {
           </p>
           <h3 className="display-6 fw-bold my-4">₹{product.price}</h3>
           <p className="lead">{product.description}</p>
-          <button className="btn btn-outline-dark px-4 py-2" onClick={()=>addProduct(product)}>
+          <button
+            className="btn btn-outline-dark px-4 py-2"
+            onClick={() => addProduct(product)}
+          >
             {' '}
             Add to Cart
           </button>
-          <Link className="btn btn-dark ms-2 px-3 py-2" to="/">
+          <Link className="btn btn-dark ms-2 px-3 py-2" to="/cart">
             {' '}
             Go to Cart
           </Link>

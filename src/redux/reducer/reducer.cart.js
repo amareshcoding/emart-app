@@ -13,7 +13,7 @@ export const handleCart = (state = cart, {type, payload}) => {
                // console.log('exist: ', exist);
                if(exist){
                     //Increase the Quantity
-                    return state.map((x) => x.id === product.id ? {...x, qty: x.qty + 1} : x);
+                    return state.map((x) => x.id === product.id ? {...x, qty: (x.qty + 1)} : x);
                }else{
                     const product = payload;
                     return [
