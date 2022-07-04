@@ -1,5 +1,5 @@
 
-const actionTypes = {
+export const actionTypes = {
      ADDITEM : "ADDITEM",
      DELITEM : "DELITEM"
 }

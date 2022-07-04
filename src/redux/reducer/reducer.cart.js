@@ -1,4 +1,4 @@
-import { ADDITEM, DELITEM } from "../action/action";
+import { actionTypes } from "../action/action";
 
 
 const cart = [];
@@ -7,7 +7,7 @@ export const handleCart = (state = cart, {type, payload}) => {
      const product = payload;
      // console.log('product: ', product);
      switch(type){
-          case ADDITEM:
+          case actionTypes.ADDITEM:
                //Check if Product is Already Exist
                const exist = state.find((x) => x.id === product.id);
                // console.log('exist: ', exist);
@@ -25,7 +25,7 @@ export const handleCart = (state = cart, {type, payload}) => {
                     ]
                }
                
-          case DELITEM:
+          case actionTypes.DELITEM:
                const exist1 = state.find((x) => x.id === product.id);
                if(exist1.qty === 1){
                     return state.filter((x) => x.id !== product.id);
