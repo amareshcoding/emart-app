@@ -7,13 +7,11 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 export default function Product() {
   const { id } = useParams();
-  //   console.log('id: ', id);
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const addProduct = (p) => {
-    // console.log('p: ', p);
     dispatch(addCart(p));
   };
 
@@ -21,13 +19,12 @@ export default function Product() {
     const getProduct = async () => {
       setLoading(true);
       const res = await fetch(`https://fakestoreapi.com/products/${id}`);
-
-      setProduct(await res.json());
-
+      const data = await res.json();
+      setProduct(data);
       setLoading(false);
     };
     getProduct();
-  }, []);
+  }, []); //eslint-disable-line react-hooks/exhaustive-deps
 
   const Loading = () => {
     return (

@@ -13,7 +13,7 @@ const Register = () => {
       console.log('Submited', formValues);
       setIsSubmit(false);
     }
-  }, [formErrors]);
+  }, [formErrors]); //eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,10 +32,10 @@ const Register = () => {
 
   const validate = (values) => {
     const errors = {};
-    //     const regex = '^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$';
+
     const regexForEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     const regexForPassword =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+      '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$';
 
     if (!values.username) {
       errors.username = 'Username is required!';

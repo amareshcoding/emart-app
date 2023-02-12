@@ -1,41 +1,57 @@
-import { actionTypes } from "../action/action";
+import { actionTypes } from '../action/action';
 
+const initialState = {
+  cart: [],
+};
 
-const cart = [];
+export const handleCart = (state = initialState, { type, payload }) => {
+  switch (type) {
+    case actionTypes.ADDITEM: {
+      //Check if Product is Already Exist
+      const exist = state.cart.find((item) => item.id === payload.id);
+      if (exist) {
+        //Increase the Quantity
+        const updateQuantity = state.cart.map((item) =>
+          item.id === payload.id ? { ...item, qty: item.qty + 1 } : item
+        );
+        return {
+          ...state,
+          cart: updateQuantity,
+        };
+      } else {
+        //Add a new cart item
+        return {
+          ...state,
+          cart: [
+            ...state.cart,
+            {
+              ...payload,
+              qty: 1,
+            },
+          ],
+        };
+      }
+    }
+    case actionTypes.DELITEM: {
+      const exist1 = state.cart.find((item) => item.id === payload.id);
+      if (exist1.qty === 1) {
+        const deleteItem = state.cart.filter((item) => item.id !== payload.id);
+        return {
+          ...state,
+          cart: deleteItem,
+        };
+      } else {
+        const decreaseQty = state.cart.map((item) =>
+          item.id === payload.id ? { ...item, qty: item.qty - 1 } : item
+        );
+        return {
+          ...state,
+          cart: decreaseQty,
+        };
+      }
+    }
 
-export const handleCart = (state = cart, {type, payload}) => {
-     const product = payload;
-     // console.log('product: ', product);
-     switch(type){
-          case actionTypes.ADDITEM:
-               //Check if Product is Already Exist
-               const exist = state.find((x) => x.id === product.id);
-               // console.log('exist: ', exist);
-               if(exist){
-                    //Increase the Quantity
-                    return state.map((x) => x.id === product.id ? {...x, qty: (x.qty + 1)} : x);
-               }else{
-                    const product = payload;
-                    return [
-                         ...state,
-                         {
-                              ...product,
-                              qty: 1,
-                         }
-                    ]
-               }
-               
-          case actionTypes.DELITEM:
-               const exist1 = state.find((x) => x.id === product.id);
-               if(exist1.qty === 1){
-                    return state.filter((x) => x.id !== product.id);
-               }else{
-                    return state.map((x) => x.id === product.id ? {...x, qty: x.qty - 1} : x);
-               }
-               
-          default:
-               return state;
-          
-
-     }
-}
+    default:
+      return state;
+  }
+};
