@@ -8,21 +8,17 @@ const Register = () => {
   const [isSubmit, setIsSubmit] = useState(false);
 
   useEffect(() => {
-    console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log('Submited', formValues);
       setIsSubmit(false);
     }
   }, [formErrors]); //eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setFormValues({
       ...formValues,
       [name]: value,
     });
-    //     console.log(formValues);
   };
   const handleSubmit = (e) => {
     e.preventDefault();

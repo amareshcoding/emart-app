@@ -1,29 +1,29 @@
 import { actionTypes } from '../action/action';
 
 const initialState = {
-  cart: [],
+  products: [],
 };
 
 export const handleCart = (state = initialState, { type, payload }) => {
   switch (type) {
     case actionTypes.ADDITEM: {
       //Check if Product is Already Exist
-      const exist = state.cart.find((item) => item.id === payload.id);
+      const exist = state.products.find((item) => item.id === payload.id);
       if (exist) {
         //Increase the Quantity
-        const updateQuantity = state.cart.map((item) =>
+        const updateQuantity = state.products.map((item) =>
           item.id === payload.id ? { ...item, qty: item.qty + 1 } : item
         );
         return {
           ...state,
-          cart: updateQuantity,
+          products: updateQuantity,
         };
       } else {
-        //Add a new cart item
+        //Add a new products item
         return {
           ...state,
-          cart: [
-            ...state.cart,
+          products: [
+            ...state.products,
             {
               ...payload,
               qty: 1,
@@ -33,21 +33,38 @@ export const handleCart = (state = initialState, { type, payload }) => {
       }
     }
     case actionTypes.DELITEM: {
-      const exist1 = state.cart.find((item) => item.id === payload.id);
-      if (exist1.qty === 1) {
-        const deleteItem = state.cart.filter((item) => item.id !== payload.id);
-        return {
-          ...state,
-          cart: deleteItem,
-        };
-      } else {
-        const decreaseQty = state.cart.map((item) =>
-          item.id === payload.id ? { ...item, qty: item.qty - 1 } : item
+      const deleteItem = state.products.filter((item) => item.id !== payload);
+      return {
+        ...state,
+        products: deleteItem,
+      };
+    }
+    case actionTypes.CHANGEQTY: {
+      if (payload.changeType === 'inc') {
+        const incQty = state.products.map((item) =>
+          item.id === payload.producrId ? { ...item, qty: item.qty + 1 } : item
         );
         return {
           ...state,
-          cart: decreaseQty,
+          products: incQty,
         };
+      } else {
+        const foundProduct = state.products.find(
+          (item) => item.id === payload.producrId
+        );
+        if (foundProduct.qty !== 1) {
+          const decQty = state.products.map((item) =>
+            item.id === payload.producrId
+              ? { ...item, qty: item.qty - 1 }
+              : item
+          );
+          return {
+            ...state,
+            products: decQty,
+          };
+        } else {
+          return { ...state };
+        }
       }
     }
 
