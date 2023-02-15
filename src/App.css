@@ -2,3 +2,12 @@
 .navbar-nav a {
   font-size: 20px;
 }
+
+.login a,
+.register a {
+  text-decoration: none;
+}
+.login p,
+.register p {
+  font-style: italic;
+}

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
-const initialValues = { username: '', email: '', password: '' };
-const Register = () => {
+const initialValues = { email: '', password: '' };
+const Login = () => {
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
@@ -15,18 +15,10 @@ const Register = () => {
     }
   }, [formErrors]); //eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
-      [name]: value,
-    });
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    setIsSubmit(true);
-    navigate('/login');
+    navigate('/home');
   };
 
   const validate = (values) => {
@@ -36,9 +28,6 @@ const Register = () => {
     const regexForPassword =
       '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$';
 
-    if (!values.username) {
-      errors.username = 'Username is required!';
-    }
     if (!values.email) {
       errors.email = 'Email is required!';
     } else if (!regexForEmail.test(values.email)) {
@@ -46,20 +35,25 @@ const Register = () => {
     }
     if (!values.password) {
       errors.password = 'Password is required!';
-    } else if (values.password.length < 4) {
-      errors.password = 'Password must be more than 4 characters!';
-    } else if (values.password.length > 10) {
-      errors.password = 'Password must be less than 10 characters!';
     } else if (!regexForPassword.test(values.password)) {
       errors.password =
         'Password must contain eight characters having at least one uppercase letter, one lowercase letter, one number and one special character!';
     }
     return errors;
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
+  };
+
   return (
-    <div className="container mt-5 register">
+    <div className="container mt-5 login">
       <div className="row d-flex justify-content-center">
-        <div className="col-md-4 pt-5 pb-1 px-5 border rounded shadow-sm bg-light">
+        <div className="col-md-4 pt-5 pb-3 px-5 border rounded shadow-sm bg-light">
           {Object.keys(formErrors).length === 0 && isSubmit ? (
             <div className="alert alert-success" role="alert">
               Signed in successfully!
@@ -69,17 +63,6 @@ const Register = () => {
             //   <pre>{JSON.stringify(formValues, undefined, 2)}</pre>
           )}
           <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-2" controlId="formBasicUsername">
-              <Form.Label>Username</Form.Label>
-              <Form.Control
-                type="text"
-                name="username"
-                placeholder="Enter Username"
-                value={formValues.username}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <p className="text-danger">{formErrors.username}</p>
             <Form.Group className="mb-2" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control
@@ -91,7 +74,7 @@ const Register = () => {
               />
             </Form.Group>
             <p className="text-danger">{formErrors.email}</p>
-            <Form.Group className="mb-2" controlId="formBasicPassword">
+            <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
@@ -102,16 +85,16 @@ const Register = () => {
               />
             </Form.Group>
             <p className="text-danger">{formErrors.password}</p>
-            <Form.Group className="text-center mt-3">
-              <Button variant="primary px-5" type="submit">
-                REGISTER
+            <Form.Group className="text-center">
+              <Button variant="primary  px-5" type="submit">
+                LOGIN
               </Button>
             </Form.Group>
           </Form>
           <p className="text-center mt-4">
-            Have an account? &nbsp;
+            Don't have an account? &nbsp;
             <strong>
-              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
             </strong>
           </p>
         </div>
@@ -120,4 +103,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
